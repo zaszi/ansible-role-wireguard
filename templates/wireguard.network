@@ -1,0 +1,13 @@
+[Match]
+Name=wg0
+
+[Network]
+Address={{ wg_address }}/32
+
+[Route]
+Gateway=10.200.200.1
+Destination=10.200.200.0/24
+Metric=8184
+{% if wg_server != ansible_hostname %}
+GatewayOnlink=true
+{% endif %}

@@ -1,2 +1,6 @@
 ---
-# handlers file for ansible-role-wireguard
+- name: Restart systemd-network
+  service:
+    name: systemd-networkd
+    state: restarted
+  listen: "restart systemd-networkd"

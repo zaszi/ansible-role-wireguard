@@ -1,0 +1,16 @@
+---
+- name: Set up wireguard server network device
+  blockinfile:
+    path: /etc/systemd/network/40-wireguard.netdev
+    marker: "# {mark} SERVER #"
+    block: |
+      [NetDev]
+      Name=wg0
+      Kind=wireguard
+      Description=WireGuard
+
+      [WireGuard]
+      ListenPort=51820
+      PrivateKey={{ wg_key.stdout }}
+    create: true
+  notify: "restart systemd-networkd"

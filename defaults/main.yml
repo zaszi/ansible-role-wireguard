@@ -1,2 +1,4 @@
 ---
-# defaults file for ansible-role-wireguard
+arch: auto
+wg_server: hostname
+wg_address: 10.200.200.1

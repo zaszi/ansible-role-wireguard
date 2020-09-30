@@ -1,0 +1,40 @@
+---
+- name: Generate a pre-shared key
+  shell: |
+    wg genpsk > {{ ansible_hostname }}.psk
+    chmod 600 {{ ansible_hostname }}
+  args:
+    chdir: /etc/wireguard
+    creates: "/etc/wireguard/{{ ansible_hostname }}.psk"
+
+- name: Retrieve pre-shared key as variable
+  command: "cat /etc/wireguard/{{ ansible_hostname }}.psk"
+  register: wg_psk
+  changed_when: false
+
+- name: Retrieve server public key as variable
+  command: "cat /etc/wireguard/{{ wg_server }}.pub"
+  register: wg_server_pub
+  delegate_to: "{{ wg_server }}"
+  changed_when: false
+
+- name: Set up wireguard client network device
+  template:
+    src: wireguard/wireguard.netdev
+    dest: /etc/systemd/network/40-wireguard.netdev
+    owner: root
+    group: root
+    mode: 0644
+  notify: "restart systemd-networkd"
+
+- name: Register client in the server network device
+  blockinfile:
+    path: /etc/systemd/network/40-wireguard.netdev
+    marker: "# {mark} {{ ansible_hostname | upper }} #"
+    block: |
+      [WireGuardPeer]
+      PublicKey={{ wg_pub.stdout }}
+      PresharedKey={{ wg_psk.stdout }}
+      AllowedIPs=10.200.200.2/32
+  delegate_to: "{{ wg_server }}"
+  notify: "restart server systemd-networkd"
