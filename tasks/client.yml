@@ -20,7 +20,7 @@
 
 - name: Set up wireguard client network device
   template:
-    src: wireguard/wireguard.netdev
+    src: wireguard.netdev
     dest: /etc/systemd/network/40-wireguard.netdev
     owner: root
     group: root

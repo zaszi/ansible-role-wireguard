@@ -53,7 +53,7 @@
 
 - name: Set up wireguard network configuration
   template:
-    src: wireguard/wireguard.network
+    src: wireguard.network
     dest: /etc/systemd/network/40-wireguard.network
     owner: root
     group: root
