@@ -13,4 +13,7 @@
       ListenPort=51820
       PrivateKey={{ wg_key.stdout }}
     create: true
+    owner: root
+    group: systemd-network
+    mode: 0640
   notify: "restart systemd-networkd"
