@@ -2,7 +2,7 @@
 - name: Generate a pre-shared key
   shell: |
     wg genpsk > {{ ansible_hostname }}.psk
-    chmod 600 {{ ansible_hostname }}
+    chmod 600 {{ ansible_hostname }}.psk
   args:
     chdir: /etc/wireguard
     creates: "/etc/wireguard/{{ ansible_hostname }}.psk"
@@ -37,4 +37,4 @@
       PresharedKey={{ wg_psk.stdout }}
       AllowedIPs=10.200.200.2/32
   delegate_to: "{{ wg_server }}"
-  notify: "restart server systemd-networkd"
+  notify: "restart systemd-networkd"
