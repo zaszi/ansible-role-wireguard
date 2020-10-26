@@ -1,13 +1,16 @@
 ---
 - name: Install dependencies for Arch Linux
-  pacman:
+  community.general.pacman:
     name: wireguard-tools
     state: present
   when: arch == "auto"
 
 - name: Install dependencies for Arch Linux ARM
-  pacman:
-    name: wireguard-dkms wireguard-tools linux-headers
+  community.general.pacman:
+    name:
+      - wireguard-dkms
+      - wireguard-tools
+      - linux-headers
     state: present
   when: arch != "auto"
 

@@ -4,6 +4,8 @@ Deploys both client and server configurations for [Wireguard](https://www.wiregu
 
 ## Requirements
 
+To install Arch Linux packages, this role relies on the pacman module of the community general collection. Install it with `ansible-galaxy collection install community.general`.
+
 This role requires `systemd-networkd` to be installed on both client and server
 hosts.
 
