@@ -30,4 +30,4 @@ None.
 
 ## License
 
-Ansible-role-wireguard is licensed under the [MIT license](https://github.com/zaszi/ansible-role-wireguard/blob/master/LICENSE.md).
+Ansible-role-wireguard is licensed under the [MIT license](https://github.com/zaszi/ansible-role-wireguard/blob/master/LICENSE).
