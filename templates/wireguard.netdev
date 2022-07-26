@@ -11,4 +11,4 @@ PublicKey={{ wg_server_pub.stdout }}
 PresharedKey={{ wg_psk.stdout }}
 AllowedIPs=10.200.200.0/24
 Endpoint=zaszi.net:51820
-PersistentKeepalive=25
+PersistentKeepalive=60
