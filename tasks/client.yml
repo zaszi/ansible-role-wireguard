@@ -35,6 +35,6 @@
       [WireGuardPeer]
       PublicKey={{ wg_pub.stdout }}
       PresharedKey={{ wg_psk.stdout }}
-      AllowedIPs=10.200.200.2/32
+      AllowedIPs={{ wg_address4 }} {{ wg_address6 }}
   delegate_to: "{{ wg_server }}"
   notify: "restart systemd-networkd"

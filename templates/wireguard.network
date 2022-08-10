@@ -2,4 +2,5 @@
 Name=wg0
 
 [Network]
-Address={{ wg_address }}/24
+Address={{ wg_address4 }}
+Address={{ wg_address6 }}

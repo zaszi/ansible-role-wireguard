@@ -7,7 +7,7 @@
       [NetDev]
       Name=wg0
       Kind=wireguard
-      Description=WireGuard
+      Description=WireGuard tunnel
 
       [WireGuard]
       ListenPort=51820

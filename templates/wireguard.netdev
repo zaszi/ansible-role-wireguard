@@ -1,14 +1,15 @@
 [NetDev]
 Name=wg0
 Kind=wireguard
-Description=WireGuard
+Description=WireGuard tunnel
 
 [WireGuard]
+ListenPort=51820
 PrivateKey={{ wg_key.stdout }}
 
 [WireGuardPeer]
 PublicKey={{ wg_server_pub.stdout }}
 PresharedKey={{ wg_psk.stdout }}
-AllowedIPs=10.200.200.0/24
-Endpoint=zaszi.net:51820
+AllowedIPs={{ wg_address4 }} {{ wg_address6 }}
+Endpoint={{ wg_endpoint }}:51820
 PersistentKeepalive=60
