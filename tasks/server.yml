@@ -1,6 +1,6 @@
 ---
 - name: Set up wireguard server network device
-  blockinfile:
+  ansible.builtin.blockinfile:
     path: /etc/systemd/network/40-wireguard.netdev
     marker: "# {mark} SERVER #"
     block: |

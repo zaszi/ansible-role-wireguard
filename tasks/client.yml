@@ -1,6 +1,6 @@
 ---
 - name: Generate a pre-shared key
-  shell: |
+  ansible.builtin.shell: |
     wg genpsk > {{ ansible_hostname }}.psk
     chmod 600 {{ ansible_hostname }}.psk
   args:
@@ -8,18 +8,18 @@
     creates: "/etc/wireguard/{{ ansible_hostname }}.psk"
 
 - name: Retrieve pre-shared key as variable
-  command: "cat /etc/wireguard/{{ ansible_hostname }}.psk"
+  ansible.builtin.command: "cat /etc/wireguard/{{ ansible_hostname }}.psk"
   register: wg_psk
   changed_when: false
 
 - name: Retrieve server public key as variable
-  command: "cat /etc/wireguard/{{ wg_server }}.pub"
+  ansible.builtin.command: "cat /etc/wireguard/{{ wg_server }}.pub"
   register: wg_server_pub
   delegate_to: "{{ wg_server }}"
   changed_when: false
 
 - name: Set up wireguard client network device
-  template:
+  ansible.builtin.template:
     src: wireguard.netdev
     dest: /etc/systemd/network/40-wireguard.netdev
     owner: root
@@ -28,7 +28,7 @@
   notify: "restart systemd-networkd"
 
 - name: Register client in the server network device
-  blockinfile:
+  ansible.builtin.blockinfile:
     path: /etc/systemd/network/40-wireguard.netdev
     marker: "# {mark} {{ ansible_hostname | upper }} #"
     block: |

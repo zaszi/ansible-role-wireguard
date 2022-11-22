@@ -15,7 +15,7 @@
   when: arch != "auto"
 
 - name: Ensure /etc/wireguard exists
-  file:
+  ansible.builtin.file:
     path: /etc/wireguard
     owner: root
     group: root
@@ -23,7 +23,7 @@
     state: directory
 
 - name: Generate a private key
-  shell: |
+  ansible.builtin.shell: |
     wg genkey > {{ ansible_hostname }}
     chmod 600 {{ ansible_hostname }}
   args:
@@ -31,12 +31,12 @@
     creates: "/etc/wireguard/{{ ansible_hostname }}"
 
 - name: Retrieve private key as variable
-  command: "cat /etc/wireguard/{{ ansible_hostname }}"
+  ansible.builtin.command: "cat /etc/wireguard/{{ ansible_hostname }}"
   register: wg_key
   changed_when: false
 
 - name: Generate a public key
-  shell: |
+  ansible.builtin.shell: |
     wg pubkey < {{ ansible_hostname }} > {{ ansible_hostname }}.pub
     chmod 600 {{ ansible_hostname }}.pub
   args:
@@ -44,18 +44,20 @@
     creates: "/etc/wireguard/{{ ansible_hostname }}.pub"
 
 - name: Retrieve public key as variable
-  command: "cat /etc/wireguard/{{ ansible_hostname }}.pub"
+  ansible.builtin.command: "cat /etc/wireguard/{{ ansible_hostname }}.pub"
   register: wg_pub
   changed_when: false
 
-- include_tasks: server.yml
+- name: Include server tasks
+  ansible.builtin.include_tasks: server.yml
   when: ansible_hostname == wg_server
 
-- include_tasks: client.yml
+- name: Include client tasks
+  ansible.builtin.include_tasks: client.yml
   when: ansible_hostname != wg_server
 
 - name: Set up wireguard network configuration
-  template:
+  ansible.builtin.template:
     src: wireguard.network
     dest: /etc/systemd/network/40-wireguard.network
     owner: root
