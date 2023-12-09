@@ -19,7 +19,7 @@
     path: /etc/wireguard
     owner: root
     group: root
-    mode: 0700
+    mode: '700'
     state: directory
 
 - name: Generate a private key
@@ -62,5 +62,5 @@
     dest: /etc/systemd/network/40-wireguard.network
     owner: root
     group: root
-    mode: 0644
+    mode: '644'
   notify: "restart systemd-networkd"

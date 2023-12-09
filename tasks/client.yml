@@ -24,7 +24,7 @@
     dest: /etc/systemd/network/40-wireguard.netdev
     owner: root
     group: systemd-network
-    mode: 0640
+    mode: '640'
   notify: "restart systemd-networkd"
 
 - name: Register client in the server network device

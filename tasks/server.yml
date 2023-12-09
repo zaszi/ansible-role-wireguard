@@ -15,5 +15,5 @@
     create: true
     owner: root
     group: systemd-network
-    mode: 0640
+    mode: '640'
   notify: "restart systemd-networkd"
