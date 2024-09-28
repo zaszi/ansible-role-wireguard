@@ -59,7 +59,7 @@
 - name: Set up wireguard network configuration
   ansible.builtin.template:
     src: wireguard.network
-    dest: /etc/systemd/network/40-wireguard.network
+    dest: /etc/systemd/network/50-wireguard.network
     owner: root
     group: root
     mode: '644'

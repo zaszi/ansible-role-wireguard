@@ -21,7 +21,7 @@
 - name: Set up wireguard client network device
   ansible.builtin.template:
     src: wireguard.netdev
-    dest: /etc/systemd/network/40-wireguard.netdev
+    dest: /etc/systemd/network/50-wireguard.netdev
     owner: root
     group: systemd-network
     mode: '640'
@@ -29,7 +29,7 @@
 
 - name: Register client in the server network device
   ansible.builtin.blockinfile:
-    path: /etc/systemd/network/40-wireguard.netdev
+    path: /etc/systemd/network/50-wireguard.netdev
     marker: '# {mark} {{ ansible_hostname | upper }} #'
     block: |
       [WireGuardPeer]
