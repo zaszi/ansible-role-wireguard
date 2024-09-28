@@ -2,7 +2,7 @@
 - name: Set up wireguard server network device
   ansible.builtin.blockinfile:
     path: /etc/systemd/network/40-wireguard.netdev
-    marker: "# {mark} SERVER #"
+    marker: '# {mark} SERVER #'
     block: |
       [NetDev]
       Name=wg0
@@ -16,4 +16,4 @@
     owner: root
     group: systemd-network
     mode: '640'
-  notify: "restart systemd-networkd"
+  notify: 'restart systemd-networkd'

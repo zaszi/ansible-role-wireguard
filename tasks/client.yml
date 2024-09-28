@@ -5,17 +5,17 @@
     chmod 600 {{ ansible_hostname }}.psk
   args:
     chdir: /etc/wireguard
-    creates: "/etc/wireguard/{{ ansible_hostname }}.psk"
+    creates: '/etc/wireguard/{{ ansible_hostname }}.psk'
 
 - name: Retrieve pre-shared key as variable
-  ansible.builtin.command: "cat /etc/wireguard/{{ ansible_hostname }}.psk"
+  ansible.builtin.command: 'cat /etc/wireguard/{{ ansible_hostname }}.psk'
   register: wg_psk
   changed_when: false
 
 - name: Retrieve server public key as variable
-  ansible.builtin.command: "cat /etc/wireguard/{{ wg_server }}.pub"
+  ansible.builtin.command: 'cat /etc/wireguard/{{ wg_server }}.pub'
   register: wg_server_pub
-  delegate_to: "{{ wg_server }}"
+  delegate_to: '{{ wg_server }}'
   changed_when: false
 
 - name: Set up wireguard client network device
@@ -25,16 +25,16 @@
     owner: root
     group: systemd-network
     mode: '640'
-  notify: "restart systemd-networkd"
+  notify: 'restart systemd-networkd'
 
 - name: Register client in the server network device
   ansible.builtin.blockinfile:
     path: /etc/systemd/network/40-wireguard.netdev
-    marker: "# {mark} {{ ansible_hostname | upper }} #"
+    marker: '# {mark} {{ ansible_hostname | upper }} #'
     block: |
       [WireGuardPeer]
       PublicKey={{ wg_pub.stdout }}
       PresharedKey={{ wg_psk.stdout }}
       AllowedIPs={{ wg_address4 }} {{ wg_address6 }}
-  delegate_to: "{{ wg_server }}"
-  notify: "restart systemd-networkd"
+  delegate_to: '{{ wg_server }}'
+  notify: 'restart systemd-networkd'

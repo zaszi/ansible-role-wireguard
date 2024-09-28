@@ -3,4 +3,4 @@
   ansible.builtin.service:
     name: systemd-networkd.service
     state: restarted
-  listen: "restart systemd-networkd"
+  listen: 'restart systemd-networkd'

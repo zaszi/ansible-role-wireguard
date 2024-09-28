@@ -28,10 +28,10 @@
     chmod 600 {{ ansible_hostname }}
   args:
     chdir: /etc/wireguard
-    creates: "/etc/wireguard/{{ ansible_hostname }}"
+    creates: '/etc/wireguard/{{ ansible_hostname }}'
 
 - name: Retrieve private key as variable
-  ansible.builtin.command: "cat /etc/wireguard/{{ ansible_hostname }}"
+  ansible.builtin.command: 'cat /etc/wireguard/{{ ansible_hostname }}'
   register: wg_key
   changed_when: false
 
@@ -41,10 +41,10 @@
     chmod 600 {{ ansible_hostname }}.pub
   args:
     chdir: /etc/wireguard
-    creates: "/etc/wireguard/{{ ansible_hostname }}.pub"
+    creates: '/etc/wireguard/{{ ansible_hostname }}.pub'
 
 - name: Retrieve public key as variable
-  ansible.builtin.command: "cat /etc/wireguard/{{ ansible_hostname }}.pub"
+  ansible.builtin.command: 'cat /etc/wireguard/{{ ansible_hostname }}.pub'
   register: wg_pub
   changed_when: false
 
@@ -63,4 +63,4 @@
     owner: root
     group: root
     mode: '644'
-  notify: "restart systemd-networkd"
+  notify: 'restart systemd-networkd'
